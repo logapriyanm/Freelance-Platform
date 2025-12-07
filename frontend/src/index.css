@@ -1,0 +1,80 @@
+/* index.css */
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Updated CSS - Add to your existing CSS */
+:root {
+  --primary-color: #2563eb; /* Blue - Trust, Professionalism */
+  --secondary-color: #7c3aed; /* Purple - Creativity */
+  --success-color: #10b981; /* Green - Success, Money */
+  --warning-color: #f59e0b; /* Amber - Caution, Attention */
+  --danger-color: #ef4444; /* Red - Errors, Danger */
+  --dark-color: #1f2937; /* Gray - Professional text */
+  --light-color: #f9fafb; /* Light background */
+}
+
+/* Responsive Container */
+.container {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
