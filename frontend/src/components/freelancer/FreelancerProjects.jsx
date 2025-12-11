@@ -39,8 +39,8 @@ const FreelancerProjects = () => {
 
       const queryString = params.toString();
       const url = queryString
-        ? `/api/projects/my-projects?${queryString}`
-        : `/api/projects/my-projects`;
+        ? `/projects/my-projects?${queryString}`
+        : `/projects/my-projects`;
 
       const response = await api.get(url);
       setProjects(response.data || []);
@@ -63,7 +63,7 @@ const FreelancerProjects = () => {
     if (!window.confirm('Are you sure you want to delete this project?')) return;
 
     try {
-      await api.delete(`/api/projects/${selectedProject._id}`);
+      await api.delete(`/projects/${selectedProject._id}`);
       toast.success('Project deleted successfully');
       fetchProjects();
       setMenuOpen(null);

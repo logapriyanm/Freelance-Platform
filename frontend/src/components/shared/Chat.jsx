@@ -173,7 +173,7 @@ const Chat = () => {
     try {
       setIsLoading(true);
       // ✅ FIXED: add /api prefix
-      const response = await api.get('/api/chat/conversations');
+      const response = await api.get('/chat/conversations');
       if (response.data) {
         setConversations(response.data);
       }

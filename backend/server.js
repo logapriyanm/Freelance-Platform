@@ -107,12 +107,12 @@ app.use((req, res, next) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Mount routers
-app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectRoutes);
-app.use('/api/bids', bidRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/auth', authRoutes);
+app.use('/projects', projectRoutes);
+app.use('/bids', bidRoutes);
+app.use('/chat', chatRoutes);
+app.use('/users', userRoutes);
+app.use('/admin', adminRoutes);
 
 // Health check endpoint (put this BEFORE 404 handlers)
 app.get('/health', (req, res) => {

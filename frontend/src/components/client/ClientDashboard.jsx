@@ -107,7 +107,7 @@ const ClientDashboard = () => {
       setLoading(true);
 
       // ✅ Pass timeRange as query param
-      const res = await api.get('api/projects/client-projects', {
+      const res = await api.get('projects/client-projects', {
         params: { timeRange },
       });
 

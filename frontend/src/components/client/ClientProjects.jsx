@@ -23,7 +23,7 @@ const ClientProjects = () => {
     try {
       setLoading(true);
       // ✅ FIXED: added /api prefix
-      const response = await api.get('/api/projects/client-projects');
+      const response = await api.get('/projects/client-projects');
       setProjects(response.data || []);
     } catch (error) {
       console.error(error);

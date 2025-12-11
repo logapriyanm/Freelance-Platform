@@ -42,7 +42,7 @@ const ClientPayments = () => {
   const fetchPaymentsFromProjects = async () => {
     try {
       setLoading(true);
-      const res = await api.get('api/projects/client-projects');
+      const res = await api.get('/projects/client-projects');
       const projects = res.data || [];
 
       // Derive "payments" from projects
