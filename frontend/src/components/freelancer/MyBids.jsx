@@ -44,7 +44,7 @@ const MyBids = () => {
   const fetchBids = async () => {
     try {
       setLoading(true);
-      const response = await api.get('bids/my-bids');
+      const response = await api.get('api/freelancer/my-bids');
       let filteredBids = response.data;
       
       if (filters.status) {

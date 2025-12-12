@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Vite uses import.meta.env instead of process.env
-const API_URL =  'http://localhost:5000';
+const API_URL =  'https://freelance-platform-dxdv.onrender.com';
 
 // Create axios instance
 const api = axios.create({

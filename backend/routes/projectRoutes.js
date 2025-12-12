@@ -1,4 +1,6 @@
-// routes/projectRoutes.js
+/**
+ * Project Routes
+ */
 const express = require('express');
 const router = express.Router();
 const {
@@ -7,27 +9,21 @@ const {
   createProject,
   updateProject,
   deleteProject,
-  getClientProjects,
-  getFreelancerProjects
+  getClientProjects
 } = require('../controllers/projectController');
+const { protect, authorize } = require('../middleware/authMiddleware');
 
-const { protect } = require('../middleware/authMiddleware');
-
-// Browse / list
+// Public routes
 router.get('/', getProjects);
-
-// Client-specific projects
-router.get('/client-projects', protect, getClientProjects);
-
-// Create project (client)
-router.post('/', protect, createProject);
-
-// Freelancer-specific projects
-router.get('/my-projects', protect, getFreelancerProjects);
-
-// Single project
 router.get('/:id', getProjectById);
-router.put('/:id', protect, updateProject);
-router.delete('/:id', protect, deleteProject);
+
+// Protected routes
+router.use(protect);
+
+// Client-only routes
+router.post('/', authorize('client'), createProject);
+router.get('/client/my-projects', authorize('client'), getClientProjects);
+router.put('/:id', authorize('client'), updateProject);
+router.delete('/:id', authorize('client'), deleteProject);
 
 module.exports = router;

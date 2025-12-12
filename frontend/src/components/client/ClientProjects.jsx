@@ -22,8 +22,7 @@ const ClientProjects = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      // ✅ FIXED: added /api prefix
-      const response = await api.get('/projects/client-projects');
+     const response = await api.get('/api/projects/client/my-projects');
       setProjects(response.data || []);
     } catch (error) {
       console.error(error);

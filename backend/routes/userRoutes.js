@@ -1,26 +1,34 @@
-// backend/routes/userRoutes.js
+/**
+ * User Routes (for both clients and freelancers)
+ */
 const express = require('express');
 const router = express.Router();
 const {
   getUserProfile,
+  getMyProfile,
   updatePortfolio,
   addPortfolioItem,
   updateSkills,
-  searchFreelancers,
+  searchFreelancers
 } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
+const upload = require('../middleware/uploadMiddleware');
 
-// Search freelancers (public)
+// Public routes
 router.get('/freelancers', searchFreelancers);
-
-// Get public user profile by ID
 router.get('/:id', getUserProfile);
 
-// Portfolio routes
-router.put('/portfolio', protect, updatePortfolio);
-router.post('/portfolio', protect, addPortfolioItem);
+// Protected routes
+router.use(protect);
+
+// Profile
+router.get('/profile/me', getMyProfile);
+
+// Portfolio
+router.put('/portfolio', updatePortfolio);
+router.post('/portfolio', addPortfolioItem);
 
 // Skills
-router.put('/skills', protect, updateSkills);
+router.put('/skills', updateSkills);
 
 module.exports = router;

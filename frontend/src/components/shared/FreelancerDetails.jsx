@@ -16,6 +16,8 @@ import {
   FaUser,
 } from 'react-icons/fa';
 
+const isObjectId = (s = '') => /^[0-9a-fA-F]{24}$/.test(s);
+
 const FreelancerDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,54 +31,73 @@ const FreelancerDetails = () => {
     const fetchFreelancer = async () => {
       try {
         setLoading(true);
-        const res = await api.get(`/users/${id}`);
-        setFreelancer(res.data);
+        // ensure endpoint path is absolute with leading slash
+        const res = await api.get(`/api/users/${id}`);
+        // API sometimes returns { user, reviews } — handle both shapes
+        setFreelancer(res.data.user || res.data);
       } catch (error) {
         console.error('Error fetching freelancer details:', error);
-        toast.error(error.message || 'Error fetching freelancer details');
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          'Error fetching freelancer details';
+        toast.error(message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      fetchFreelancer();
+    // Guard: only fetch when id looks like a valid Mongo ObjectId
+    if (!id) {
+      setLoading(false);
+      return;
     }
-  }, [id]);
-
-// inside FreelancerDetails.jsx
-
-const handleContact = async () => {
-  if (!currentUser) {
-    toast.error('Please login to contact a freelancer');
-    navigate('/login');
-    return;
-  }
-
-  if (currentUser._id === freelancer?._id) {
-    toast.error('You cannot start a conversation with yourself');
-    return;
-  }
-
-  try {
-    setContactLoading(true);
-    // ✅ FIXED: add /api prefix
-    const res = await api.post('/api/chat', {
-      participantId: freelancer._id,
-      projectId: null
-    });
-
-    if (res.data) {
-      toast.success('Conversation started! Opening chat...');
-      navigate('/chat');
+    if (!isObjectId(id)) {
+      console.warn('Invalid user id param:', id);
+      setLoading(false);
+      setFreelancer(null);
+      // Optional: redirect to safe page
+      // navigate('/projects');
+      return;
     }
-  } catch (error) {
-    console.error('Error starting chat:', error);
-    toast.error(error.message || 'Unable to start conversation');
-  } finally {
-    setContactLoading(false);
-  }
-};
+
+    fetchFreelancer();
+  }, [id, navigate]);
+
+
+  // inside FreelancerDetails.jsx
+
+  const handleContact = async () => {
+    if (!currentUser) {
+      toast.error('Please login to contact a freelancer');
+      navigate('/login');
+      return;
+    }
+
+    if (currentUser._id === freelancer?._id) {
+      toast.error('You cannot start a conversation with yourself');
+      return;
+    }
+
+    try {
+      setContactLoading(true);
+
+      const res = await api.post('api/chat', {
+        participantId: freelancer._id,
+        projectId: null
+      });
+
+      if (res.data) {
+        toast.success('Conversation started! Opening chat...');
+        navigate('/chat');
+      }
+    } catch (error) {
+      console.error('Error starting chat:', error);
+      toast.error(error.message || 'Unable to start conversation');
+    } finally {
+      setContactLoading(false);
+    }
+  };
 
 
   if (loading) {

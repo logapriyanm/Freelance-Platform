@@ -3,7 +3,7 @@ import api from '../../services/api';
 
 // Async thunks
 export const fetchConversations = createAsyncThunk(
-  'chat/fetchConversations',
+  'api/chat/fetchConversations',
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get('/chat/conversations');
@@ -15,7 +15,7 @@ export const fetchConversations = createAsyncThunk(
 );
 
 export const fetchMessages = createAsyncThunk(
-  'chat/fetchMessages',
+  'api/chat/fetchMessages',
   async (conversationId, { rejectWithValue }) => {
     try {
       const response = await api.get(`/chat/conversations/${conversationId}/messages`);
@@ -27,7 +27,7 @@ export const fetchMessages = createAsyncThunk(
 );
 
 export const sendMessage = createAsyncThunk(
-  'chat/sendMessage',
+  'api/chat/sendMessage',
   async ({ conversationId, message }, { rejectWithValue }) => {
     try {
       const response = await api.post(`/chat/conversations/${conversationId}/messages`, { message });
@@ -39,7 +39,7 @@ export const sendMessage = createAsyncThunk(
 );
 
 export const startConversation = createAsyncThunk(
-  'chat/startConversation',
+  'api/chat/startConversation',
   async ({ recipientId, projectId, initialMessage }, { rejectWithValue }) => {
     try {
       const response = await api.post('/chat/conversations', {
@@ -55,7 +55,7 @@ export const startConversation = createAsyncThunk(
 );
 
 export const markAsRead = createAsyncThunk(
-  'chat/markAsRead',
+  'api/chat/markAsRead',
   async (conversationId, { rejectWithValue }) => {
     try {
       await api.put(`/chat/conversations/${conversationId}/read`);

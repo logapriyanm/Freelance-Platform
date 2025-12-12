@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
@@ -13,7 +13,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 // Auth
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import RoleSelection from './components/auth/RoleSelection';
+
 
 // Admin
 import AdminDashboard from './components/admin/adminDashboard';
@@ -51,6 +51,8 @@ import Support from './pages/Support';
 import NotFound from './pages/NotFound';
 
 function App() {
+
+  
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -63,7 +65,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/role-selection" element={<RoleSelection />} />
+                
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/support" element={<Support />} />
@@ -177,6 +179,11 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/freelancer/dashboard"
+                  element={<Navigate to="/dashboard" replace />}
+                />
+
 
                 {/* Shared Routes (accessible by all authenticated users) */}
                 <Route
@@ -227,8 +234,8 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                
-                
+
+
 
                 {/* Catch all route */}
                 <Route path="*" element={<NotFound />} />

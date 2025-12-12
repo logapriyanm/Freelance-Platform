@@ -44,7 +44,7 @@ const Login = () => {
         navigate('/client/dashboard');
         break;
       case 'freelancer':
-        navigate('/freelancer/dashboard');
+        navigate('/');
         break;
       case 'admin':
         navigate('/admin');

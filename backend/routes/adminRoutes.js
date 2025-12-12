@@ -1,4 +1,6 @@
-// routes/adminRoutes.js
+/**
+ * Admin Routes
+ */
 const express = require('express');
 const router = express.Router();
 const {
@@ -7,31 +9,28 @@ const {
   verifyUser,
   suspendUser,
   getAdminProjects,
+  getDisputes,
   resolveDispute,
   getAnalytics,
-  getDisputes,
   getSettings,
   updateSettings,
-  backupSettings,
-  resetSettings,
-  getRecentActivities,
+  getRecentActivities
 } = require('../controllers/adminController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-// All routes require admin role
-router.use(protect);
-router.use(authorize('admin'));
+router.use(protect, authorize('admin'));
 
-// Stats & analytics
+// Stats & Analytics
 router.get('/stats', getPlatformStats);
 router.get('/analytics', getAnalytics);
+router.get('/activities', getRecentActivities);
 
-// Users
+// User Management
 router.get('/users', getUsers);
 router.put('/users/:id/verify', verifyUser);
 router.put('/users/:id/suspend', suspendUser);
 
-// Projects / disputes
+// Project Management
 router.get('/projects', getAdminProjects);
 router.get('/disputes', getDisputes);
 router.put('/disputes/:id/resolve', resolveDispute);
@@ -39,10 +38,5 @@ router.put('/disputes/:id/resolve', resolveDispute);
 // Settings
 router.get('/settings', getSettings);
 router.put('/settings', updateSettings);
-router.get('/settings/backup', backupSettings);
-router.post('/settings/reset', resetSettings);
-
-// NEW: recent activities
-router.get('/activities', getRecentActivities);
 
 module.exports = router;

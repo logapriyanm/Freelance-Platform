@@ -1,37 +1,32 @@
+/**
+ * Bid Routes
+ */
 const express = require('express');
 const router = express.Router();
 const {
   submitBid,
   getProjectBids,
-  getMyBids,
-  updateBid,
-  withdrawBid,
   getBidById,
+  updateBid,
   acceptBid
 } = require('../controllers/bidController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-// Submit a bid (freelancer)
-router.route('/')
-  .post(protect, authorize('freelancer'), submitBid);
+router.use(protect);
 
-// Get my bids (freelancer)
-router.route('/my-bids')
-  .get(protect, authorize('freelancer'), getMyBids);
+// Submit bid (freelancer only)
+router.post('/', authorize('freelancer'), submitBid);
 
-// Get bids for a project
-router.route('/project/:projectId')
-  .get(protect, getProjectBids);
+// Get project bids
+router.get('/project/:projectId', getProjectBids);
 
-// Get single bid, update bid
-router.route('/:id')
-  .get(protect, getBidById)
-  .put(protect, authorize('freelancer'), updateBid);
+// Get single bid
+router.get('/:id', getBidById);
 
-// Withdraw bid (freelancer)
-router.put('/:id/withdraw', protect, authorize('freelancer'), withdrawBid);
+// Update bid (freelancer only)
+router.put('/:id', authorize('freelancer'), updateBid);
 
-// Accept bid (client)
-router.put('/:id/accept', protect, authorize('client'), acceptBid);
+// Accept bid (client only)
+router.put('/:id/accept', authorize('client'), acceptBid);
 
 module.exports = router;

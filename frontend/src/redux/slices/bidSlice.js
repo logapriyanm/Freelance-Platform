@@ -3,7 +3,7 @@ import api from '../../services/api';
 
 // Async thunks
 export const fetchMyBids = createAsyncThunk(
-  'bids/fetchMyBids',
+  'api/bids/fetchMyBids',
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get('/bids/my-bids');
@@ -15,7 +15,7 @@ export const fetchMyBids = createAsyncThunk(
 );
 
 export const fetchBidById = createAsyncThunk(
-  'bids/fetchBidById',
+  'api/bids/fetchBidById',
   async (bidId, { rejectWithValue }) => {
     try {
       const response = await api.get(`/bids/${bidId}`);
@@ -27,7 +27,7 @@ export const fetchBidById = createAsyncThunk(
 );
 
 export const updateBid = createAsyncThunk(
-  'bids/updateBid',
+  'api/bids/updateBid',
   async ({ bidId, bidData }, { rejectWithValue }) => {
     try {
       const response = await api.put(`/bids/${bidId}`, bidData);
@@ -39,7 +39,7 @@ export const updateBid = createAsyncThunk(
 );
 
 export const withdrawBid = createAsyncThunk(
-  'bids/withdrawBid',
+  'api/bids/withdrawBid',
   async (bidId, { rejectWithValue }) => {
     try {
       await api.put(`/bids/${bidId}/withdraw`);
@@ -53,7 +53,7 @@ export const withdrawBid = createAsyncThunk(
 
 
 export const fetchProjectBids = createAsyncThunk(
-  'bids/fetchProjectBids',
+  'api/bids/fetchProjectBids',
   async (projectId, { rejectWithValue }) => {
     try {
       const response = await api.get(`/bids/project/${projectId}`);

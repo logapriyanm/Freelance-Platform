@@ -3,7 +3,7 @@ import api from '../../services/api';
 
 // Async thunks
 export const fetchProjects = createAsyncThunk(
-  'projects/fetchProjects',
+  'api/projects/fetchProjects',
   async (filters, { rejectWithValue }) => {
     try {
       const response = await api.get('/projects', { params: filters });
@@ -15,7 +15,7 @@ export const fetchProjects = createAsyncThunk(
 );
 
 export const fetchProjectById = createAsyncThunk(
-  'projects/fetchProjectById',
+  'api/projects/fetchProjectById',
   async (projectId, { rejectWithValue }) => {
     try {
       const response = await api.get(`/projects/${projectId}`);
@@ -27,7 +27,7 @@ export const fetchProjectById = createAsyncThunk(
 );
 
 export const createProject = createAsyncThunk(
-  'projects/createProject',
+  'api/projects/createProject',
   async (projectData, { rejectWithValue }) => {
     try {
       const response = await api.post('/projects', projectData);
@@ -39,7 +39,7 @@ export const createProject = createAsyncThunk(
 );
 
 export const updateProject = createAsyncThunk(
-  'projects/updateProject',
+  'api/projects/updateProject',
   async ({ projectId, projectData }, { rejectWithValue }) => {
     try {
       const response = await api.put(`/projects/${projectId}`, projectData);
@@ -51,7 +51,7 @@ export const updateProject = createAsyncThunk(
 );
 
 export const deleteProject = createAsyncThunk(
-  'projects/deleteProject',
+  'api/projects/deleteProject',
   async (projectId, { rejectWithValue }) => {
     try {
       await api.delete(`/projects/${projectId}`);
@@ -63,7 +63,7 @@ export const deleteProject = createAsyncThunk(
 );
 
 export const submitBid = createAsyncThunk(
-  'projects/submitBid',
+  'api/projects/submitBid',
   async ({ projectId, bidData }, { rejectWithValue }) => {
     try {
       // backend expects: { projectId, proposal, bidAmount, estimatedTime }
@@ -80,7 +80,7 @@ export const submitBid = createAsyncThunk(
 
 
 export const acceptBid = createAsyncThunk(
-  'projects/acceptBid',
+  'api/projects/acceptBid',
   async ({ projectId, bidId }, { rejectWithValue }) => {
     try {
       // projectId not needed for backend, but kept in args for compatibility

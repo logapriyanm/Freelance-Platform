@@ -17,7 +17,7 @@ const initialState = {
 
 // Register user
 export const register = createAsyncThunk(
-  'auth/register',
+  'api/auth/register',
   async (userData, thunkAPI) => {
     try {
       return await authService.register(userData);
@@ -33,7 +33,7 @@ export const register = createAsyncThunk(
 
 // Login user
 export const login = createAsyncThunk(
-  'auth/login',
+  'api/auth/login',
   async (userData, thunkAPI) => {
     try {
       return await authService.login(userData);
@@ -54,7 +54,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 
 // Update profile
 export const updateProfile = createAsyncThunk(
-  'auth/updateProfile',
+  'api/auth/updateProfile',
   async (userData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
@@ -72,7 +72,7 @@ export const updateProfile = createAsyncThunk(
 
 // Get user profile
 export const getProfile = createAsyncThunk(
-  'auth/getProfile',
+  'api/auth/getProfile',
   async (_, thunkAPI) => {
     try {
       return await authService.getProfile();

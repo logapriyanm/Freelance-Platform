@@ -1,3 +1,6 @@
+/**
+ * Chat Routes
+ */
 const express = require('express');
 const router = express.Router();
 const {
@@ -11,7 +14,6 @@ const {
 } = require('../controllers/chatController');
 const { protect } = require('../middleware/authMiddleware');
 
-// All routes require authentication
 router.use(protect);
 
 // Chat management

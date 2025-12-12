@@ -42,8 +42,8 @@ const ProjectDetails = () => {
     try {
       setLoading(true);
       const [projectRes, bidsRes] = await Promise.all([
-        api.get(`/projects/${id}`),
-        api.get(`/bids/project/${id}`),
+        api.get(`api/projects/${id}`),
+        api.get(`api/bids/project/${id}`),
       ]);
 
       setProject(projectRes.data);
@@ -58,7 +58,7 @@ const ProjectDetails = () => {
 
   const handleSubmitBid = async () => {
     try {
-      await api.post('/bids', {
+      await api.post('api/bids', {
         projectId: id,
         ...bidData,
         bidAmount: Number(bidData.bidAmount),
@@ -83,7 +83,7 @@ const ProjectDetails = () => {
         return;
       }
 
-      await api.put(`/bids/${selectedBid._id}/accept`);
+      await api.put(`api/bids/${selectedBid._id}/accept`);
       toast.success('Freelancer selected successfully');
       setSelectDialogOpen(false);
       fetchProjectDetails();

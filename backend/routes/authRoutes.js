@@ -1,23 +1,23 @@
-// backend/routes/authRoutes.js
+/**
+ * Authentication Routes
+ */
 const express = require('express');
 const router = express.Router();
 const {
   register,
   login,
   getMe,
-  updateProfile,
+  updateProfile
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
-const upload = require('../middleware/uploadMiddleware');
+const upload = require('../middleware/uploadMiddleware'); 
 
-// Auth
+// Public routes
 router.post('/register', register);
 router.post('/login', login);
 
-// Get logged in user
+// Protected routes
 router.get('/me', protect, getMe);
-
-// Update profile (including avatar upload)
-router.put('/profile', protect, upload.single('avatar'), updateProfile);
+router.put('/profile', protect, upload.single('avatar'), updateProfile); 
 
 module.exports = router;
