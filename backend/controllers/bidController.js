@@ -131,10 +131,11 @@ exports.hasApplied = async (req, res) => {
     const bid = await Bid.findOne({
       project: projectId,
       freelancer: req.user.id,
-    });
+    }).select('_id');
 
-    res.json({ applied: !!bid });
+    res.json({ applied: Boolean(bid) });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
