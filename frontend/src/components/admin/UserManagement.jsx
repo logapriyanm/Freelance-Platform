@@ -45,7 +45,7 @@ const UserManagement = () => {
   try {
     setLoading(true);
     // Use the correct API endpoint structure
-    const response = await api.get('api/admin/users', {
+    const response = await api.get('/admin/users', {
       params: {
         role: filters.role,
         verified: filters.verified,

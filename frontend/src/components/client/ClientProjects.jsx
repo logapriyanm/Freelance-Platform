@@ -22,7 +22,7 @@ const ClientProjects = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-     const response = await api.get('/api/projects/client/my-projects');
+     const response = await api.get('/projects/client/my-projects');
       setProjects(response.data || []);
     } catch (error) {
       console.error(error);

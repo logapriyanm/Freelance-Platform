@@ -63,7 +63,7 @@ const handleSubmit = async (e) => {
             },
     };
 
-    const response = await api.post('api/projects', projectData);
+    const response = await api.post('/projects', projectData);
     toast.success('Project posted successfully!');
     navigate(`/project/${response.data._id}`);
   } catch (error) {

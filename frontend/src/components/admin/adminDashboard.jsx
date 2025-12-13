@@ -36,7 +36,7 @@ const AdminDashboard = () => {
 
   const fetchRecentActivities = async () => {
     try {
-      const response = await api.get('api/admin/activities');
+      const response = await api.get('/admin/activities');
       setRecentActivities(response.data || []);
     } catch (error) {
       console.error(error);
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await api.get('api/admin/stats');
+      const response = await api.get('/admin/stats');
       setStats(response.data || {});
     } catch (error) {
       console.error(error);

@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -40,19 +41,24 @@ const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (origin === clientUrl) res.setHeader('Access-Control-Allow-Origin', origin);
 
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://freelance-platform-dxdv.onrender.com',
+];
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  next();
-});
-
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

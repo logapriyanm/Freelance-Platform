@@ -103,7 +103,7 @@ const AdminSettings = () => {
   const fetchSettings = async () => {
     try {
       setLoading(true);
-      const response = await api.get('api/admin/settings');
+      const response = await api.get('/admin/settings');
       if (response.data) {
         setSettings(response.data);
         setTempSettings(response.data);
