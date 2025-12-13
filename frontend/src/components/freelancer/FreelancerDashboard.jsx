@@ -41,7 +41,7 @@ const FreelancerDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const [bidsRes] = await Promise.all([
-        api.get('api/freelancer/my-bids'),
+        api.get('/freelancer/my-bids'),
       ]);
 
       const bids = bidsRes.data;

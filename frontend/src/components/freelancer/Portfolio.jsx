@@ -65,7 +65,7 @@ const Portfolio = () => {
   const fetchPortfolio = async () => {
     try {
       setLoading(true);
-      const response = await api.get('api/auth/me');
+      const response = await api.get('/auth/me');
       setPortfolioItems(response.data.portfolio || []);
     } catch (error) {
       toast.error('Error fetching portfolio');

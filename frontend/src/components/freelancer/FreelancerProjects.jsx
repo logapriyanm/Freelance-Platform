@@ -40,7 +40,7 @@ const FreelancerProjects = () => {
       // const queryString = params.toString();
       const url = 
         
-         `api/freelancer/projects`;
+         `/freelancer/projects`;
 
       const response = await api.get(url);
       setProjects(response.data || []);
