@@ -16,6 +16,8 @@ import {
 } from 'react-icons/fa';
 import { IoIosArrowDropdown } from "react-icons/io";
 import { BsBank } from "react-icons/bs";
+import api from '../../services/api';
+
 
 const Earnings = () => {
   const [timeFilter, setTimeFilter] = useState('month');
@@ -34,58 +36,40 @@ const Earnings = () => {
   }, [timeFilter]);
 
   const fetchEarningsData = async () => {
-    setLoading(true);
-    // Mock data
-    setTimeout(() => {
-      setStats({
-        totalEarnings: 12500,
-        pendingBalance: 3200,
-        availableBalance: 4300,
-        thisMonth: 2800,
-        lastMonth: 2400,
+    try {
+      setLoading(true);
+
+      const res = await api.get('/freelancer/earnings', {
+        params: { filter: timeFilter }
       });
 
-      setTransactions([
-        {
-          id: 1,
-          project: 'E-commerce Website Development',
-          client: 'Sarah Johnson',
-          amount: 2500,
-          status: 'completed',
-          date: '2024-01-15',
-          type: 'earning',
-        },
-        {
-          id: 2,
-          project: 'Mobile App UI/UX Design',
-          client: 'Mike Chen',
-          amount: 1800,
-          status: 'pending',
-          date: '2024-01-18',
-          type: 'earning',
-        },
-        {
-          id: 3,
-          project: 'Data Analysis Dashboard',
-          client: 'Alex Rodriguez',
-          amount: 3200,
-          status: 'completed',
-          date: '2024-01-10',
-          type: 'earning',
-        },
-        {
-          id: 4,
-          project: 'Website Maintenance',
-          client: 'Emma Wilson',
-          amount: 500,
-          status: 'withdrawn',
-          date: '2024-01-05',
-          type: 'withdrawal',
-        },
-      ]);
+      setStats(res.data?.stats || {
+        totalEarnings: 0,
+        pendingBalance: 0,
+        availableBalance: 0,
+        thisMonth: 0,
+        lastMonth: 0,
+      });
+
+
+      const formattedTransactions = res.data.transactions.map((t) => ({
+        id: t._id,
+        project: t.project?.title || 'Project',
+        client: t.client?.name || 'Client',
+        amount: t.netAmount,
+        status: t.status,
+        date: t.createdAt,
+        type: 'earning'
+      }));
+
+      setTransactions(formattedTransactions);
+    } catch (error) {
+      console.error('Failed to fetch earnings', error);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
+
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
@@ -162,11 +146,10 @@ const Earnings = () => {
               <button
                 key={filter.value}
                 onClick={() => setTimeFilter(filter.value)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                  timeFilter === filter.value
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${timeFilter === filter.value
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
               >
                 {filter.label}
               </button>
@@ -226,7 +209,13 @@ const Earnings = () => {
             </p>
             <div className="flex items-center text-sm text-green-600">
               <FaArrowUp className="mr-1" />
-              <span>{Math.round(((stats.thisMonth - stats.lastMonth) / stats.lastMonth) * 100)}% vs last month</span>
+              <span>
+                {stats.lastMonth > 0
+                  ? Math.round(((stats.thisMonth - stats.lastMonth) / stats.lastMonth) * 100)
+                  : 0}
+                % vs last month
+              </span>
+
             </div>
           </div>
         </div>
@@ -274,9 +263,8 @@ const Earnings = () => {
                           <div className="text-sm text-gray-900">{transaction.client}</div>
                         </td>
                         <td className="px-4 py-4">
-                          <div className={`text-sm font-bold ${
-                            transaction.type === 'earning' ? 'text-green-600' : 'text-blue-600'
-                          }`}>
+                          <div className={`text-sm font-bold ${transaction.type === 'earning' ? 'text-green-600' : 'text-blue-600'
+                            }`}>
                             {transaction.type === 'earning' ? '+' : '-'}{formatCurrency(transaction.amount)}
                           </div>
                         </td>

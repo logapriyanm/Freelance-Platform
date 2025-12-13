@@ -101,8 +101,8 @@ exports.acceptBid = async (req, res) => {
     const project = await Project.findById(bid.project);
     if (!project) return res.status(404).json({ message: 'Project not found' });
 
-    if (project.client.toString() !== req.user.id.toString()) {
-      return res.status(401).json({ message: 'Not authorized' });
+    if (project.client.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized' });
     }
 
     bid.status = 'accepted';
@@ -111,14 +111,29 @@ exports.acceptBid = async (req, res) => {
 
     await Bid.updateMany(
       { project: project._id, _id: { $ne: bid._id } },
-      { $set: { status: 'rejected' } }
+      { status: 'rejected' }
     );
 
     project.selectedFreelancer = bid.freelancer;
     project.status = 'in-progress';
     await project.save();
 
-    res.json(bid);
+    res.json({ message: 'Freelancer assigned', bid });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.hasApplied = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    const bid = await Bid.findOne({
+      project: projectId,
+      freelancer: req.user.id,
+    });
+
+    res.json({ applied: !!bid });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
