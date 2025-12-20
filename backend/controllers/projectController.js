@@ -8,22 +8,22 @@ const Project = require('../models/Project');
  */
 exports.getProjects = async (req, res) => {
   try {
-    const { category, status, minBudget, maxBudget, search } = req.query;
-    const query = {};
+    const { category, search } = req.query;
+    const query = { status: 'open' };
 
     if (category) query.category = category;
-    if (status) query.status = status;
     if (search) query.title = { $regex: search, $options: 'i' };
 
     const projects = await Project.find(query)
       .sort({ createdAt: -1 })
       .populate('client', 'name');
 
-    res.json({ projects, total: projects.length });
+    res.json({ projects });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 /**
  * Get single project

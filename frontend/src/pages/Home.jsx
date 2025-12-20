@@ -197,7 +197,7 @@ const Home = () => {
       {/* Features Section */}
       <div className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4">Why Choose SB Works?</h2>
+          <h2 className="text-4xl font-bold text-center mb-4">Why Choose FreelancePro?</h2>
           <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
             Everything you need to succeed in the freelance world
           </p>

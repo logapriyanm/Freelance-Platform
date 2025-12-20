@@ -10,16 +10,14 @@ const Transaction = require('../models/Transaction');
  */
 exports.getFreelancerProjects = async (req, res) => {
   try {
-    const { status, search } = req.query;
-    const query = { 'bids.freelancer': req.user.id };
+    const bids = await Bid.find({ freelancer: req.user.id })
+      .select('project');
 
-    if (status) query.status = status;
-    if (search) query.title = { $regex: search, $options: 'i' };
+    const projectIds = bids.map(b => b.project);
 
-    const projects = await Project.find(query)
-      .sort({ createdAt: -1 })
+    const projects = await Project.find({ _id: { $in: projectIds } })
       .populate('client', 'name')
-      .populate('bids.freelancer', 'name');
+      .sort({ createdAt: -1 });
 
     res.json(projects);
   } catch (error) {
@@ -27,23 +25,71 @@ exports.getFreelancerProjects = async (req, res) => {
   }
 };
 
+
 /**
  * Get freelancer's earnings
  */
 exports.getEarnings = async (req, res) => {
   try {
-    const transactions = await Transaction.find({ 
-      freelancer: req.user.id,
-      status: 'completed'
-    }).sort({ createdAt: -1 });
+    const freelancerId = req.user.id;
 
-    const totalEarnings = transactions.reduce((sum, t) => sum + t.netAmount, 0);
-    
-    res.json({ transactions, totalEarnings });
+    const transactions = await Transaction.find({ freelancer: freelancerId })
+      .populate('project', 'title')
+      .populate('client', 'name')
+      .sort({ createdAt: -1 });
+
+    let stats = {
+      totalEarnings: 0,
+      pendingBalance: 0,
+      availableBalance: 0,
+      thisMonth: 0,
+      lastMonth: 0
+    };
+
+    const now = new Date();
+    const startOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+    transactions.forEach(t => {
+      stats.totalEarnings += t.netAmount;
+
+      if (t.status === 'pending') {
+        stats.pendingBalance += t.netAmount;
+      }
+
+      if (t.status === 'completed') {
+        stats.availableBalance += t.netAmount;
+
+        if (t.createdAt >= startOfThisMonth) {
+          stats.thisMonth += t.netAmount;
+        }
+
+        if (t.createdAt >= startOfLastMonth && t.createdAt <= endOfLastMonth) {
+          stats.lastMonth += t.netAmount;
+        }
+      }
+    });
+
+    res.json({
+      stats,
+      transactions
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({
+      stats: {
+        totalEarnings: 0,
+        pendingBalance: 0,
+        availableBalance: 0,
+        thisMonth: 0,
+        lastMonth: 0
+      },
+      transactions: []
+    });
   }
 };
+
 
 /**
  * Get freelancer's bids

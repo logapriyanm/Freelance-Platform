@@ -1,15 +1,9 @@
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
+  title: { type: String, required: true, trim: true },
+  description: { type: String, required: true },
+
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -24,15 +18,14 @@ const projectSchema = new mongoose.Schema({
       'writing',
       'marketing',
       'mobile-app',
+      'data-science',
+      'ai-ml',
       'other'
     ],
     required: true
   },
 
-  skills: [{
-    type: String,
-    trim: true
-  }],
+  skills: [{ type: String, trim: true }],
 
   budgetType: {
     type: String,
@@ -40,11 +33,10 @@ const projectSchema = new mongoose.Schema({
     required: true
   },
 
-  // ✔ Budget structure for BOTH fixed & hourly
   budget: {
-    fixed: { type: Number },          // for fixed budget
-    min: { type: Number },            // for hourly min
-    max: { type: Number }             // for hourly max
+    fixed: Number,
+    min: Number,
+    max: Number
   },
 
   duration: {
@@ -64,13 +56,10 @@ const projectSchema = new mongoose.Schema({
     default: 'open'
   },
 
-  attachments: [{
-    type: String
-  }],
-
   selectedFreelancer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: null
   },
 
   bids: [{
@@ -78,19 +67,7 @@ const projectSchema = new mongoose.Schema({
     ref: 'Bid'
   }],
 
-  deadline: {
-    type: Date
-  },
-
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+  deadline: Date
+}, { timestamps: true });
 
 module.exports = mongoose.model('Project', projectSchema);
