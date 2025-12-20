@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  FaFacebook, 
-  FaTwitter, 
-  FaLinkedin, 
-  FaInstagram, 
-  FaGithub,
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaLinkedin,
+  FaInstagram,
   FaBriefcase,
   FaUser,
   FaSearch,
@@ -14,187 +14,153 @@ import {
   FaFileContract,
   FaShieldAlt,
   FaAward,
-  FaHandshake
-} from 'react-icons/fa';
+  FaHandshake,
+} from "react-icons/fa";
 
 const Footer = () => {
+  const { user, token } = useSelector((state) => state.auth);
+  const role = user?.role; // admin | freelancer | client | user
+
+  // 🔴 Hide footer completely for admin
+  if (role === "admin") return null;
+
   return (
     <footer className="bg-gradient-to-r from-blue-900 to-purple-900 text-white mt-auto">
-      <div className="container mx-auto px-4 py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
-          {/* Company Info */}
-          <div className="lg:col-span-2">
+      <div className="container mx-auto px-4 py-10">
+
+        {/* ================= GRID ================= */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
+
+          {/* ================= COLUMN 1 — COMPANY ================= */}
+          <div>
             <div className="flex items-center mb-4">
-              <FaBriefcase className="text-2xl sm:text-3xl mr-2 text-blue-300" />
-              <h3 className="text-xl sm:text-2xl font-bold">FreelancePro</h3>
+              <FaBriefcase className="text-2xl mr-2 text-blue-300" />
+              <h3 className="text-xl font-bold">FreelancePro</h3>
             </div>
-            <p className="text-gray-300 mb-4 text-sm sm:text-base">
-              Connecting talented freelancers with businesses worldwide.
-              Quality work, fair pay, and seamless collaboration.
+
+            <p className="text-gray-300 text-sm mb-4">
+              Connecting freelancers and clients worldwide with secure payments
+              and trusted collaboration.
             </p>
-            <div className="flex space-x-3 mb-6">
-              <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-800 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-700 transition-colors duration-300">
-                <FaFacebook className="text-lg" />
-              </a>
-              <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-800 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-700 transition-colors duration-300">
-                <FaTwitter className="text-lg" />
-              </a>
-              <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-800 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-700 transition-colors duration-300">
-                <FaLinkedin className="text-lg" />
-              </a>
-              <a href="#" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-800 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-700 transition-colors duration-300">
-                <FaInstagram className="text-lg" />
-              </a>
+
+            <div className="flex space-x-3 mb-4">
+              <SocialIcon Icon={FaFacebook} />
+              <SocialIcon Icon={FaTwitter} />
+              <SocialIcon Icon={FaLinkedin} />
+              <SocialIcon Icon={FaInstagram} />
             </div>
-            
-            {/* Trust Badges */}
-            <div className="flex flex-wrap gap-3">
-              <div className="flex items-center bg-blue-800/50 px-3 py-2 rounded-lg">
-                <FaShieldAlt className="text-green-400 mr-2" />
-                <span className="text-xs font-medium">Secure Payments</span>
-              </div>
-              <div className="flex items-center bg-blue-800/50 px-3 py-2 rounded-lg">
-                <FaAward className="text-yellow-400 mr-2" />
-                <span className="text-xs font-medium">Verified Freelancers</span>
-              </div>
+
+            <div className="flex flex-wrap gap-2">
+              <Badge icon={<FaShieldAlt />} text="Secure Payments" />
+              <Badge icon={<FaAward />} text="Verified Talent" />
             </div>
           </div>
 
-          {/* For Freelancers */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 flex items-center">
-              <FaUser className="mr-2 text-blue-300" />
-              For Freelancers
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/browse-projects"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-sm"
-                >
-                  <FaSearch className="mr-2 text-sm" />
-                  Find Projects
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/profile"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-sm"
-                >
-                  <FaUser className="mr-2 text-sm" />
-                  Create Profile
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/how-it-works"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
-                >
-                  How it Works
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* ================= COLUMN 2 — ROLE BASED ================= */}
+          {!token && (
+            <FooterSection title="Explore">
+              <FooterLink to="/login">Login</FooterLink>
+              <FooterLink to="/register">Register</FooterLink>
+              <FooterLink to="/about">About</FooterLink>
+              <FooterLink to="/pricing">Pricing</FooterLink>
+            </FooterSection>
+          )}
 
-          {/* For Clients */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 flex items-center">
-              <FaBriefcase className="mr-2 text-purple-300" />
-              For Clients
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/post-project"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
-                >
-                  Post a Project
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/find-freelancers"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
-                >
-                  Find Freelancers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/pricing"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
-                >
-                  Pricing
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {token && role === "freelancer" && (
+            <FooterSection title="For Freelancers" icon={<FaUser />}>
+              <FooterLink to="/freelancer/projects" icon={<FaSearch />}>
+                Find Projects
+              </FooterLink>
+              <FooterLink to="/freelancer/my-bids">My Bids</FooterLink>
+              <FooterLink to="/freelancer/earnings">Earnings</FooterLink>
+              <FooterLink to="/profile">My Profile</FooterLink>
+            </FooterSection>
+          )}
 
-          {/* Support */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 flex items-center">
-              <FaHandshake className="mr-2 text-green-300" />
-              Support
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/help"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-sm"
-                >
-                  <FaQuestionCircle className="mr-2 text-sm" />
-                  Help Center
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-sm"
-                >
-                  <FaEnvelope className="mr-2 text-sm" />
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terms"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-sm"
-                >
-                  <FaFileContract className="mr-2 text-sm" />
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/privacy"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {token && (role === "client" || role === "user") && (
+            <FooterSection title="For Clients" icon={<FaBriefcase />}>
+              <FooterLink to="/client/post-project">
+                Post a Project
+              </FooterLink>
+              <FooterLink to="/projects">
+                Browse Freelancers
+              </FooterLink>
+              <FooterLink to="/client/projects">
+                My Projects
+              </FooterLink>
+              <FooterLink to="/client/payments">
+                Payments
+              </FooterLink>
+            </FooterSection>
+          )}
+
+          {/* ================= COLUMN 3 — SPACER ================= */}
+          <div className="hidden lg:block" />
+
+          {/* ================= COLUMN 4 — SUPPORT ================= */}
+          <FooterSection title="Support" icon={<FaHandshake />}>
+            <FooterLink to="/help" icon={<FaQuestionCircle />}>
+              Help Center
+            </FooterLink>
+            <FooterLink to="/contact" icon={<FaEnvelope />}>
+              Contact Us
+            </FooterLink>
+            <FooterLink to="/terms" icon={<FaFileContract />}>
+              Terms
+            </FooterLink>
+            <FooterLink to="/privacy">
+              Privacy Policy
+            </FooterLink>
+          </FooterSection>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 pt-6 sm:pt-8 border-t border-blue-800">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-center sm:text-left text-gray-400 text-xs sm:text-sm">
-              © {new Date().getFullYear()} FreelancePro. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-4">
-              <span className="text-xs text-gray-400">Available in</span>
-              <div className="flex space-x-2">
-                <span className="px-2 py-1 bg-blue-800 text-xs rounded">English</span>
-                <span className="px-2 py-1 bg-blue-800 text-xs rounded">Español</span>
-                <span className="px-2 py-1 bg-blue-800 text-xs rounded">Français</span>
-              </div>
-            </div>
-          </div>
+        {/* ================= COPYRIGHT ================= */}
+        <div className="border-t border-blue-800 mt-8 pt-6 text-center text-gray-400 text-sm">
+          © {new Date().getFullYear()} FreelancePro. All rights reserved.
         </div>
       </div>
     </footer>
   );
 };
+
+/* ================= HELPER COMPONENTS ================= */
+
+const FooterSection = ({ title, icon, children }) => (
+  <div>
+    <h4 className="text-lg font-semibold mb-4 flex items-center">
+      {icon && <span className="mr-2 text-blue-300">{icon}</span>}
+      {title}
+    </h4>
+    <ul className="space-y-2">{children}</ul>
+  </div>
+);
+
+const FooterLink = ({ to, icon, children }) => (
+  <li>
+    <Link
+      to={to}
+      className="flex items-center text-gray-300 hover:text-white transition-colors text-sm"
+    >
+      {icon && <span className="mr-2">{icon}</span>}
+      {children}
+    </Link>
+  </li>
+);
+
+const SocialIcon = ({ Icon }) => (
+  <a
+    href="#"
+    className="w-9 h-9 rounded-full bg-blue-800 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-700 transition"
+  >
+    <Icon />
+  </a>
+);
+
+const Badge = ({ icon, text }) => (
+  <div className="flex items-center bg-blue-800/50 px-3 py-1 rounded text-xs">
+    <span className="mr-2 text-green-400">{icon}</span>
+    {text}
+  </div>
+);
 
 export default Footer;

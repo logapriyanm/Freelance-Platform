@@ -49,8 +49,11 @@ export const login = createAsyncThunk(
 
 // Logout user
 export const logout = createAsyncThunk('auth/logout', async () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
   await authService.logout();
 });
+
 
 // Update profile
 export const updateProfile = createAsyncThunk(
@@ -115,12 +118,17 @@ export const authSlice = createSlice({
         state.isError = false;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isAuthenticated = true;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-      })
+  state.isLoading = false;
+  state.isSuccess = true;
+  state.isAuthenticated = true;
+
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+
+  localStorage.setItem('user', JSON.stringify(action.payload.user));
+  localStorage.setItem('token', action.payload.token);
+})
+
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
@@ -135,13 +143,18 @@ export const authSlice = createSlice({
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isAuthenticated = true;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-      })
+     .addCase(login.fulfilled, (state, action) => {
+  state.isLoading = false;
+  state.isSuccess = true;
+  state.isAuthenticated = true;
+
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+
+  localStorage.setItem('user', JSON.stringify(action.payload.user));
+  localStorage.setItem('token', action.payload.token);
+})
+
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
