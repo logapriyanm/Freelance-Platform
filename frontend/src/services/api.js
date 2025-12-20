@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Vite uses import.meta.env instead of process.env
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = `${import.meta.env.VITE_API_URL}/api` || 'http://localhost:5000/api';
 
 // Create axios instance
 const api = axios.create({
