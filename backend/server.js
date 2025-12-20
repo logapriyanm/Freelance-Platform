@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://freelance-platform-dxdv.onrender.com',
+  'https://freelancepro-s7ct.onrender.com',
 ];
 
 app.use(
