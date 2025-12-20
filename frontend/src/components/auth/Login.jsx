@@ -120,11 +120,12 @@ const Login = () => {
                   name="email"
                   value={email}
                   onChange={onChange}
-                  className="pl-10 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                  className="pl-10 w-full px-4 py-3 border rounded-xl "
                   placeholder="you@example.com"
                   required
                 />
               </div>
+
             </div>
 
             {/* PASSWORD */}
@@ -133,12 +134,7 @@ const Login = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-blue-600 hover:text-blue-500"
-                >
-                  Forgot password?
-                </Link>
+
               </div>
 
               <div className="relative">
@@ -148,8 +144,8 @@ const Login = () => {
                   name="password"
                   value={password}
                   onChange={onChange}
-                  className="pl-10 pr-10 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
-                  placeholder="••••••••"
+                  className="pl-10 pr-10 w-full px-4 py-3 border rounded-xl "
+                  placeholder="Enter your password"
                   required
                 />
 
@@ -163,6 +159,14 @@ const Login = () => {
                 </button>
               </div>
             </div>
+            <span className="flex justify-end mb-4">
+              <Link
+              to="/forgot-password"
+              className="text-sm text-blue-600 hover:text-blue-500"
+            >
+              Forgot password?
+            </Link>
+            </span>
 
             {/* SUBMIT */}
             <button

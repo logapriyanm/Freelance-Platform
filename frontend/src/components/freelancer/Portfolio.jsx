@@ -83,6 +83,23 @@ const Portfolio = () => {
     return matchesCategory && matchesSearch;
   });
 
+  const handleCloseDialog = () => {
+  setDialogOpen(false);
+  setEditItem(null);
+  setFormData({
+    title: '',
+    description: '',
+    url: '',
+    image: null,
+    skills: [],
+    category: 'web',
+    featured: false,
+  });
+  setPreviewImage(null);
+  setSkillInput('');
+};
+
+
   const handleSubmit = async () => {
     try {
       if (!formData.title.trim()) {
