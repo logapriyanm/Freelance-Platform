@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { store } from '../redux/store';
+import { logout } from '../redux/slices/authSlice';
 
 // Vite uses import.meta.env instead of process.env
-const API_URL = `${import.meta.env.VITE_API_URL}/api` || 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api' || `${import.meta.env.VITE_API_URL}/api` ;
 
 // Create axios instance
 const api = axios.create({
@@ -34,9 +36,8 @@ api.interceptors.response.use(
   (error) => {
     // Handle token expiration or unauthorized access
     if (error.response?.status === 401) {
-      // Clear local storage and redirect to login
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
+      // Dispatch logout action to clear Redux state and localStorage
+      store.dispatch(logout());
       
       // Redirect to login page if not already there
       if (window.location.pathname !== '/login') {

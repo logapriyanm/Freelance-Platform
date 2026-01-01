@@ -125,7 +125,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50 backdrop-blur-sm bg-white/95 border-b border-gray-100">
+      <nav className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50 backdrop-blur-sm bg-white/95 border-b border-gray-200">
         <div className="container mx-auto px-3 sm:px-4">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
@@ -164,7 +164,7 @@ const Navbar = () => {
             {/* Right Side Actions */}
             <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Notifications (only when logged in) */}
-             
+
 
               {/* User Menu (Desktop) */}
               {user ? (
@@ -180,9 +180,8 @@ const Navbar = () => {
                     <div className="hidden lg:flex items-center">
                       <span className="text-sm font-medium">{user.name}</span>
                       <IoIosArrowDropdown
-                        className={`ml-1 transition-transform duration-300 ${
-                          profileDropdownOpen ? 'rotate-180' : ''
-                        }`}
+                        className={`ml-1 transition-transform duration-300 ${profileDropdownOpen ? 'rotate-180' : ''
+                          }`}
                       />
                     </div>
                   </button>
@@ -191,7 +190,7 @@ const Navbar = () => {
                   {profileDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-100 animate-fadeIn">
                       <div className="px-4 py-3 border-b">
-                       
+
                         <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
                         <div className="mt-1">

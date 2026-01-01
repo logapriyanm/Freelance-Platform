@@ -257,7 +257,10 @@ const updateProfile = async (req, res) => {
     const safeUser = user.toObject();
     delete safeUser.password;
 
-    res.json(safeUser);
+    res.json({
+      success: true,
+      user: safeUser
+    });
   } catch (error) {
     console.error('Update profile error:', error);
     res.status(500).json({ message: error.message || 'Server error' });

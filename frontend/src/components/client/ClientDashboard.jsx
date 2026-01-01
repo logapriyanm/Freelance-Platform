@@ -195,13 +195,12 @@ const ClientDashboard = () => {
           </div>
           {change !== undefined && (
             <span
-              className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                change > 0
+              className={`text-xs font-semibold px-2 py-1 rounded-full ${change > 0
                   ? 'bg-green-100 text-green-800'
                   : change < 0
-                  ? 'bg-red-100 text-red-800'
-                  : 'bg-gray-100 text-gray-800'
-              }`}
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
+                }`}
             >
               {change > 0 ? '↑' : change < 0 ? '↓' : '→'} {Math.abs(change)}%
             </span>
@@ -268,7 +267,7 @@ const ClientDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
@@ -333,10 +332,10 @@ const ClientDashboard = () => {
                 {timeRange === 'week'
                   ? 'Weekly performance'
                   : timeRange === 'month'
-                  ? 'Monthly performance'
-                  : timeRange === 'quarter'
-                  ? 'Quarterly performance'
-                  : 'Yearly performance'}
+                    ? 'Monthly performance'
+                    : timeRange === 'quarter'
+                      ? 'Quarterly performance'
+                      : 'Yearly performance'}
               </p>
             </div>
             <div className="flex items-center space-x-4">
@@ -406,7 +405,7 @@ const ClientDashboard = () => {
 
         {/* Additional stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-50 rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-gray-700">
                 Average Project Value
@@ -426,7 +425,7 @@ const ClientDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-50 rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-gray-700">
                 Estimated Savings
@@ -446,7 +445,7 @@ const ClientDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-50 rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-gray-700">
                 Pending Actions
@@ -471,7 +470,7 @@ const ClientDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Recent Projects */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900">
@@ -487,19 +486,18 @@ const ClientDashboard = () => {
                       <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
-                          activeTab === tab
+                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${activeTab === tab
                             ? 'bg-white text-blue-600 shadow-sm'
                             : 'text-gray-600 hover:text-gray-900'
-                        }`}
+                          }`}
                       >
                         {tab === 'all'
                           ? 'All'
                           : tab === 'open'
-                          ? 'Open'
-                          : tab === 'in-progress'
-                          ? 'Active'
-                          : 'Completed'}
+                            ? 'Open'
+                            : tab === 'in-progress'
+                              ? 'Active'
+                              : 'Completed'}
                       </button>
                     ))}
                   </div>
@@ -544,9 +542,8 @@ const ClientDashboard = () => {
                       <div className="flex items-start">
                         <div className="flex-shrink-0">
                           <div
-                            className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm ${
-                              getStatusColor(project.status).split(' ')[0]
-                            }`}
+                            className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm ${getStatusColor(project.status).split(' ')[0]
+                              }`}
                           >
                             {getStatusIcon(project.status)}
                           </div>
@@ -578,18 +575,17 @@ const ClientDashboard = () => {
                               <FaCalendar className="mr-1" />
                               {project.createdAt
                                 ? new Date(
-                                    project.createdAt
-                                  ).toLocaleDateString()
+                                  project.createdAt
+                                ).toLocaleDateString()
                                 : 'N/A'}
                             </span>
                             {project.deadline && (
                               <span
-                                className={`flex items-center ${
-                                  calculateTimeRemaining(project.deadline) ===
-                                  'Overdue'
+                                className={`flex items-center ${calculateTimeRemaining(project.deadline) ===
+                                    'Overdue'
                                     ? 'text-red-600 font-medium'
                                     : 'text-gray-600'
-                                }`}
+                                  }`}
                               >
                                 <FaClock className="mr-1" />
                                 {calculateTimeRemaining(project.deadline)}

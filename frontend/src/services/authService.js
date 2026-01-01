@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/auth` || 'http://localhost:5000/api/auth';
+const API_URL = 'http://localhost:5000/api/auth' || `${import.meta.env.VITE_API_URL}/api/auth` ;
 
 // Register user
 const register = async (userData) => {
   const response = await axios.post(API_URL + '/register', userData);
   
-  if (response.data) {
+  if (response.data) {  
     localStorage.setItem('user', JSON.stringify(response.data.user));
     localStorage.setItem('token', response.data.token);
   }

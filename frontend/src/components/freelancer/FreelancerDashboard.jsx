@@ -53,7 +53,7 @@ const FreelancerDashboard = () => {
       const totalEarnings = bids
         .filter(b => b.status === 'accepted' && b.project?.status === 'completed')
         .reduce((sum, bid) => sum + bid.bidAmount, 0);
-      
+
       const successRate = totalBids > 0 ? Math.round((completedProjects / totalBids) * 100) : 0;
       const responseTime = 24; // Mock data
 
@@ -116,18 +116,17 @@ const FreelancerDashboard = () => {
             {React.cloneElement(icon, { className: 'w-5 h-5 sm:w-6 sm:h-6' })}
           </div>
           {change !== undefined && (
-            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-              change > 0 
-                ? 'bg-green-100 text-green-800' 
+            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${change > 0
+                ? 'bg-green-100 text-green-800'
                 : change < 0
-                ? 'bg-red-100 text-red-800'
-                : 'bg-gray-100 text-gray-800'
-            }`}>
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-gray-100 text-gray-800'
+              }`}>
               {change > 0 ? '↑' : change < 0 ? '↓' : '→'} {Math.abs(change)}%
             </span>
           )}
         </div>
-        
+
         <div className="space-y-2">
           <h3 className="text-xs sm:text-sm font-medium text-gray-600 uppercase tracking-wider">{title}</h3>
           {loading ? (
@@ -162,7 +161,7 @@ const FreelancerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
@@ -273,7 +272,7 @@ const FreelancerDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Recent Bids */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900">Recent Bids</h2>
@@ -286,7 +285,7 @@ const FreelancerDashboard = () => {
                   View All <FaArrowRight className="ml-1" />
                 </Link>
               </div>
-              
+
               <div className="space-y-3">
                 {recentBids.length === 0 ? (
                   <div className="text-center py-8">
@@ -353,12 +352,12 @@ const FreelancerDashboard = () => {
           {/* Sidebar */}
           <div className="space-y-4 sm:space-y-6">
             {/* Suggested Projects */}
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Suggested Projects</h2>
                 <FaRocket className="text-orange-500" />
               </div>
-              
+
               <div className="space-y-3">
                 {suggestedProjects.map((project) => (
                   <div key={project.id} className="p-3 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg border border-orange-100">
@@ -382,7 +381,7 @@ const FreelancerDashboard = () => {
                   </div>
                 ))}
               </div>
-              
+
               <Link
                 to="/projects"
                 className="block w-full text-center mt-4 px-4 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors duration-300 text-sm font-medium"
@@ -392,12 +391,12 @@ const FreelancerDashboard = () => {
             </div>
 
             {/* Profile Completion */}
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Profile Strength</h2>
                 <FaChartBar className="text-blue-500" />
               </div>
-              
+
               <div className="mb-4">
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-600">Profile Completion</span>
@@ -407,7 +406,7 @@ const FreelancerDashboard = () => {
                   <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full" style={{ width: '75%' }}></div>
                 </div>
               </div>
-              
+
               <div className="space-y-2 text-sm">
                 <div className="flex items-center">
                   <FaCheckCircle className="text-green-500 mr-2" />
@@ -426,7 +425,7 @@ const FreelancerDashboard = () => {
                   <span className="text-gray-500">Upload certifications</span>
                 </div>
               </div>
-              
+
               <Link
                 to="/profile"
                 className="block w-full text-center mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 text-sm font-medium"

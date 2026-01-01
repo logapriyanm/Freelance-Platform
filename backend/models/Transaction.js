@@ -4,7 +4,7 @@ const transactionSchema = new mongoose.Schema({
   project: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project',
-    required: true
+    required: false
   },
   client: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +35,7 @@ const transactionSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['card', 'paypal', 'bank-transfer'],
+    enum: ['card', 'paypal', 'bank-transfer', 'withdrawal'],
     required: true
   },
   transactionId: {

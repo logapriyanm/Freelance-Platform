@@ -16,7 +16,7 @@ import Register from './components/auth/Register';
 
 
 // Admin
-import AdminDashboard from './components/admin/adminDashboard';
+import AdminDashboard from './components/admin/AdminDashboard';
 import DisputeResolution from './components/admin/DisputeResolution';
 import UserManagement from './components/admin/UserManagement';
 import AdminSettings from './components/admin/AdminSettings';
@@ -52,7 +52,7 @@ import NotFound from './pages/NotFound';
 
 function App() {
 
-  
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -65,7 +65,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                
+
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/support" element={<Support />} />
@@ -179,10 +179,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route
-                  path="/freelancer/dashboard"
-                  element={<Navigate to="/dashboard" replace />}
-                />
+
 
 
                 {/* Shared Routes (accessible by all authenticated users) */}

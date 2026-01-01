@@ -87,11 +87,10 @@ const AdminDashboard = () => {
           </div>
           {typeof change === 'number' && (
             <span
-              className={`text-xs sm:text-sm font-medium px-2 py-1 rounded-full ${
-                change > 0
+              className={`text-xs sm:text-sm font-medium px-2 py-1 rounded-full ${change > 0
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800'
-              }`}
+                }`}
             >
               {change > 0 ? '+' : ''}
               {change}%
@@ -136,28 +135,28 @@ const AdminDashboard = () => {
     recentActivities && recentActivities.length > 0
       ? recentActivities
       : [
-          {
-            type: 'user',
-            title: 'New user registered',
-            description: 'John Doe joined as a freelancer',
-            createdAt: new Date(),
-          },
-          {
-            type: 'project',
-            title: 'Project completed',
-            description: 'E-commerce website project delivered',
-            createdAt: new Date(),
-          },
-          {
-            type: 'transaction',
-            title: 'New dispute filed',
-            description: 'Project #12345 has a dispute',
-            createdAt: new Date(),
-          },
-        ];
+        {
+          type: 'user',
+          title: 'New user registered',
+          description: 'John Doe joined as a freelancer',
+          createdAt: new Date(),
+        },
+        {
+          type: 'project',
+          title: 'Project completed',
+          description: 'E-commerce website project delivered',
+          createdAt: new Date(),
+        },
+        {
+          type: 'transaction',
+          title: 'New dispute filed',
+          description: 'Project #12345 has a dispute',
+          createdAt: new Date(),
+        },
+      ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
@@ -248,7 +247,7 @@ const AdminDashboard = () => {
 
         {/* Additional Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-50 rounded-lg p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-gray-700">
                 Active Freelancers
@@ -313,7 +312,7 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Recent Activities */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
                   Recent Activities
@@ -356,7 +355,7 @@ const AdminDashboard = () => {
 
           {/* Quick Actions */}
           <div>
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">
                 Quick Actions
               </h2>

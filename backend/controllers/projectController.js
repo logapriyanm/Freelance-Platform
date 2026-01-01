@@ -118,10 +118,19 @@ exports.getClientProjects = async (req, res) => {
       const now = new Date();
       let start;
 
-      if (timeRange === 'week') start = new Date(now - 7 * 24 * 60 * 60 * 1000);
-      else if (timeRange === 'month') start = new Date(now.setMonth(now.getMonth() - 1));
-      else if (timeRange === 'quarter') start = new Date(now.setMonth(now.getMonth() - 3));
-      else if (timeRange === 'year') start = new Date(now.setFullYear(now.getFullYear() - 1));
+      if (timeRange === 'week') start = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      else if (timeRange === 'month') {
+        start = new Date(now);
+        start.setMonth(now.getMonth() - 1);
+      }
+      else if (timeRange === 'quarter') {
+        start = new Date(now);
+        start.setMonth(now.getMonth() - 3);
+      }
+      else if (timeRange === 'year') {
+        start = new Date(now);
+        start.setFullYear(now.getFullYear() - 1);
+      }
 
       if (start) query.createdAt = { $gte: start };
     }

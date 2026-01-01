@@ -35,7 +35,7 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const app = express();
 const server = http.createServer(app);
 
-const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+const clientUrl ='http://localhost:5173' || process.env.CLIENT_URL ;
 
 // Middlewares
 app.use(express.json());
