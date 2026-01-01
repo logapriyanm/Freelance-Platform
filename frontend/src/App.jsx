@@ -16,10 +16,10 @@ import Register from './components/auth/Register';
 
 
 // Admin
-import AdminDashboard from './components/admin/AdminDashboard';
-import DisputeResolution from './components/admin/DisputeResolution';
-import UserManagement from './components/admin/UserManagement';
-import AdminSettings from './components/admin/AdminSettings';
+import AdminDashboard from './components/admin/AdminDashboard.jsx';
+import DisputeResolution from './components/admin/DisputeResolution.jsx';
+import UserManagement from './components/admin/UserManagement.jsx';
+import AdminSettings from './components/admin/AdminSettings.jsx';
 
 // Client
 import ClientDashboard from './components/client/ClientDashboard';
